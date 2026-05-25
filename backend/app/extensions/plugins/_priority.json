@@ -1,12 +1,13 @@
 [
+    "alist_copy",
     "smartstrm",
+    "emby",
     "fnv_refresh_v2",
     "alist",
     "alist_strm",
     "alist_strm_gen",
     "alist_sync",
     "aria2",
-    "emby",
     "plex",
     "fnv",
     "auto_unarchive"

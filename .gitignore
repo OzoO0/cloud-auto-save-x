@@ -20,3 +20,4 @@ backend/data/*.db.*
 backend/data/*.db
 backend/data/cache
 docs
+/docker-data
