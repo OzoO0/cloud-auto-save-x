@@ -33,6 +33,7 @@
 网盘自动转存（Cloud Auto Save X 简称 CASX）是一个基于 FastAPI + Vue3 的 Web 应用，提供网盘自动转存功能，可以帮助你：
 
 - 🔄 **自动转存**：定时或自动（根据节目状态和任务进度）运行，自动转存各种网盘分享链接中的文件
+- 🔄 **数据同步**：基于OpenList实现的多网盘数据同步和网盘与NAS本地的数据同步
 - 📝 **智能规则**：在为手动配置重命名规则并且配置TMDB配置时，支持自动识别-重命名
 - 🧩 **文件过滤**：通过过滤规则排除不需要的文件或文件夹，支持高级过滤功能
 - 📊 **任务管理**：支持多任务管理，支持全局统一设置及单任务独立设置，支持任务筛选和排序
@@ -82,6 +83,7 @@ docker run -d \
   -p 5115:5115 \ # 映射端口，:前的可以改，即部署后访问的端口，:后的不可改
   -v ./cloud-auto-save-x/data:/app/backend/data \ # 必须，配置持久化
   -v ./cloud-auto-save-x/media:/media \ # 可选，模块alist_strm_gen生成strm使用
+  -v ./cloud-auto-save-x/nasfile:/app/backend/data/sync/nasfile \ # 可选，用于同步任务Local使用，可与网盘数据同步
   --network bridge \
   --restart unless-stopped \
   ozoo0/cloud-auto-save-x:latest
@@ -103,6 +105,7 @@ services:
     volumes:
       - ./cloud-auto-save-x/data:/app/backend/data
       - ./cloud-auto-save-x/media:/media
+      - ./cloud-auto-save-x/nasfile:/app/backend/data/sync/nasfile
 ```
 
 管理地址：<http://yourhost:5115>

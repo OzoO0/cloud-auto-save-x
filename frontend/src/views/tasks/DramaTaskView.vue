@@ -19,6 +19,7 @@ import { TASK_RUN, TASK_WRITE } from '@/constants/permissions'
 import { useAuthStore } from '@/stores/auth'
 import type { DriveAccountItem, PluginItem } from '@/types/extensions'
 import type { TaskItem, TaskSchedulerSetting } from '@/types/tasks'
+import { validateCrontab5, validateTimezone } from '@/utils/cron'
 
 const auth = useAuthStore()
 const canWrite = computed(() => auth.permissions.includes(TASK_WRITE))
@@ -622,6 +623,18 @@ async function copyRunLog() {
 
 async function saveScheduler() {
   if (!scheduler.value) return
+  const cronCheck = validateCrontab5(scheduler.value.crontab)
+  if (!cronCheck.ok) {
+    ElMessage.error(cronCheck.message)
+    return
+  }
+  const tzCheck = validateTimezone(scheduler.value.timezone)
+  if (!tzCheck.ok) {
+    ElMessage.error(tzCheck.message)
+    return
+  }
+  scheduler.value.crontab = cronCheck.normalized || scheduler.value.crontab
+  scheduler.value.timezone = tzCheck.normalized || scheduler.value.timezone
   schedulerSaving.value = true
   try {
     scheduler.value = await updateTaskSchedulerSetting({

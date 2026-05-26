@@ -11,6 +11,9 @@ from app.core.permissions import (
     PLUGIN_WRITE,
     ROLE_READ,
     ROLE_WRITE,
+    SYNC_READ,
+    SYNC_RUN,
+    SYNC_WRITE,
     TASK_READ,
     TASK_RUN,
     TASK_WRITE,
@@ -34,4 +37,7 @@ PERMISSIONS_SEED: list[tuple[str, str]] = [
     (TASK_READ, "任务查看"),
     (TASK_WRITE, "任务管理"),
     (TASK_RUN, "任务执行"),
+    (SYNC_READ, "同步任务查看"),
+    (SYNC_WRITE, "同步任务管理"),
+    (SYNC_RUN, "同步任务执行"),
 ]

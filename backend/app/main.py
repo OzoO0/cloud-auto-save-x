@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from contextlib import asynccontextmanager
+import logging
 import os
 from pathlib import Path
 
@@ -14,9 +15,12 @@ from app.api.router import api_router
 from app.core.exception_handlers import api_error_handler, http_error_handler, validation_error_handler
 from app.core.errors import ApiError
 from app.core.settings import settings
+from app.db.session import SessionLocal
 from app.extensions.runtime.task_scheduler import task_scheduler_manager
 from app.middlewares.timing import TimingMiddleware
 from app.services.proxy_image_cache import ensure_dir, resolve_proxy_image_cache_dir
+from app.services.sync_execution_recovery import abort_running_sync_executions_on_startup
+from app.services.setup import ensure_permissions_and_roles
 
 
 def _ensure_sqlite_dir() -> None:
@@ -55,6 +59,13 @@ def create_app() -> FastAPI:
     @asynccontextmanager
     async def lifespan(app: FastAPI):
         _run_db_migrations_if_needed()
+        try:
+            with SessionLocal() as db:
+                ensure_permissions_and_roles(db)
+                abort_running_sync_executions_on_startup(db)
+                db.commit()
+        except Exception as e:
+            logging.warning(f"权限初始化失败: {e}")
         task_scheduler_manager.start()
         yield
         task_scheduler_manager.shutdown()

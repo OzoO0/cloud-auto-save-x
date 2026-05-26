@@ -1,6 +1,6 @@
 import type { RouteRecordRaw } from 'vue-router'
 
-import { AUDIT_READ, DRIVE_ACCOUNT_READ, NOTIFY_READ, PLUGIN_READ, TASK_READ, TASK_WRITE, USER_READ, USER_WRITE } from '@/constants/permissions'
+import { AUDIT_READ, DRIVE_ACCOUNT_READ, NOTIFY_READ, PLUGIN_READ, SYNC_READ, TASK_READ, TASK_WRITE, USER_READ, USER_WRITE } from '@/constants/permissions'
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -64,6 +64,12 @@ export const appRoutes: RouteRecordRaw[] = [
         name: 'DramaTasks',
         component: () => import('@/views/tasks/DramaTaskView.vue'),
         meta: { title: '追剧任务', icon: 'Setting', permissions: [TASK_READ] },
+      },
+      {
+        path: 'tasks/sync',
+        name: 'SyncTasks',
+        component: () => import('@/views/tasks/SyncTaskView.vue'),
+        meta: { title: '同步任务', icon: 'Refresh', permissions: [SYNC_READ] },
       },
       {
         path: 'extensions/drives',

@@ -10,6 +10,7 @@ import type {
   TaskItem,
   TaskSchedulerSetting,
 } from '@/types/tasks'
+import { detectDriveTypeByUrl } from '@/utils/driveType'
 
 export async function fetchTasks() {
   const { data } = await http.get<TaskItem[]>('/tasks')
@@ -122,10 +123,75 @@ export async function previewShare(payload: {
 }
 
 export async function previewShareBatch(payload: { shareurls: string[]; account_name?: string | null }) {
-  const { data } = await http.post<SharePreviewBatchResponse>('/tasks/share/preview-batch', payload, {
-    headers: { 'X-Retryable': '1' },
-  })
-  return data
+  const accountName = payload.account_name ?? null
+  const shareurls = (payload.shareurls || []).map((x) => String(x || '').trim()).filter(Boolean)
+  if (!shareurls.length) return { items: [] }
+  const limit = 50
+
+  const postOnce = async (batch: string[]) => {
+    const { data } = await http.post<SharePreviewBatchResponse>(
+      '/tasks/share/preview-batch',
+      { shareurls: batch, account_name: accountName },
+      { headers: { 'X-Retryable': '1' } },
+    )
+    return data
+  }
+
+  const chunk = <T,>(items: T[], size: number) => {
+    const out: T[][] = []
+    for (let i = 0; i < items.length; i += size) out.push(items.slice(i, i + size))
+    return out
+  }
+
+  const mergeByInputOrder = (items: SharePreviewBatchResponse['items']) => {
+    const mapping = new Map<string, (typeof items)[number]>()
+    for (const it of items || []) {
+      const url = String((it as any)?.shareurl || '').trim()
+      if (!url || mapping.has(url)) continue
+      mapping.set(url, it)
+    }
+    const ordered: (typeof items)[number][] = []
+    for (const url of shareurls) {
+      const it = mapping.get(url)
+      if (it) ordered.push(it)
+    }
+    return ordered
+  }
+
+  if (shareurls.length <= limit) {
+    const out = await postOnce(shareurls)
+    return { items: mergeByInputOrder(out.items || []) }
+  }
+
+  if (accountName) {
+    const merged: SharePreviewBatchResponse['items'] = []
+    for (const part of chunk(shareurls, limit)) {
+      const out = await postOnce(part)
+      merged.push(...(out.items || []))
+    }
+    return { items: mergeByInputOrder(merged) }
+  }
+
+  const groups = new Map<string, string[]>()
+  for (const url of shareurls) {
+    const dt = detectDriveTypeByUrl(url) || 'unknown'
+    const list = groups.get(dt) || []
+    list.push(url)
+    groups.set(dt, list)
+  }
+
+  const all = await Promise.all(
+    [...groups.values()].map(async (urls) => {
+      const merged: SharePreviewBatchResponse['items'] = []
+      for (const part of chunk(urls, limit)) {
+        const out = await postOnce(part)
+        merged.push(...(out.items || []))
+      }
+      return merged
+    }),
+  )
+
+  return { items: mergeByInputOrder(all.flat()) }
 }
 
 export async function browseDrive(payload: { dir_path: string; account_name?: string | null; shareurl?: string | null; max_items?: number }) {

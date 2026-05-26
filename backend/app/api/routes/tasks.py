@@ -58,13 +58,14 @@ from app.schemas.task_repair import RepairBannedTasksOut
 from app.services import audit
 from app.services.notifications.sender import send_runtime
 from app.services.notifications.task_notify import DRAMA_NOTIFY_TITLE, build_task_section
+from app.services.sync_task_triggers import should_trigger_linked_sync_for_drama_execution, trigger_linked_sync_tasks_async
 from app.services.share_preview_batch import cache_clear as _preview_batch_cache_clear
 from app.services.share_preview_batch import preview_share_batch
 from app.services.drama_update_progress import build_drama_update_progress
 from app.services.drama_share_repair import repair_banned_drama_tasks
 from app.services.task_scheduler import get_or_create_task_scheduler_setting, update_task_scheduler_setting
 from app.services.resource_search import fetch_task_suggestions
-from app.services.tasks import create_task, delete_task, get_task, list_tasks, set_task_enabled, update_task
+from app.services.tasks import create_task, delete_task, get_task, list_tasks_recent_executions, set_task_enabled, update_task
 from app.services.tmdb_settings import get_or_create_tmdb_setting, get_tmdb_runtime_config
 
 router = APIRouter()
@@ -389,9 +390,10 @@ def list_magic_regex(db: Session = Depends(get_db)) -> MagicRegexOut:
 
 
 @router.get("/suggestions", response_model=TaskSuggestionListOut, dependencies=[Depends(require_permissions(TASK_READ))])
-def get_task_suggestions(q: str = "", d: int = 0, db: Session = Depends(get_db)) -> TaskSuggestionListOut:
+def get_task_suggestions(q: str = "", d: int = 0, drive_type: str = "", db: Session = Depends(get_db)) -> TaskSuggestionListOut:
     try:
-        items, changed, msg = fetch_task_suggestions(db, keyword=q, deep=d)
+        dt = str(drive_type or "").strip() or None
+        items, changed, msg = fetch_task_suggestions(db, keyword=q, deep=d, drive_type=dt)
         if changed:
             db.commit()
         return TaskSuggestionListOut(success=True, data=items, message=msg)
@@ -495,7 +497,7 @@ def _pick_children_count(payload: dict) -> int | None:
 
 @router.get('', response_model=list[TaskOut], dependencies=[Depends(require_permissions(TASK_READ))])
 def get_tasks(db: Session = Depends(get_db)):
-    items = list_tasks(db)
+    items = list_tasks_recent_executions(db, limit=3)
     tmdb_status_map = _load_tmdb_status_map(db, items)
     tmdb_payload_map = _load_tmdb_payload_map(db, items)
     snapshot_map = _load_savepath_snapshot_map(db, items)
@@ -702,6 +704,8 @@ def post_run_task(request: Request, task_id: int, current: CurrentUser = Depends
                 send_runtime(db, DRAMA_NOTIFY_TITLE, section)
         except Exception:
             pass
+        if should_trigger_linked_sync_for_drama_execution(execution):
+            trigger_linked_sync_tasks_async([str(getattr(task, "task_uid", "") or "")], source="api.tasks.run")
     return _execution_out(execution)
 
 
@@ -749,6 +753,8 @@ def post_run_task_stream(request: Request, task_id: int, current: CurrentUser = 
                             send_runtime(wdb, DRAMA_NOTIFY_TITLE, section)
                     except Exception:
                         pass
+                    if should_trigger_linked_sync_for_drama_execution(execution):
+                        trigger_linked_sync_tasks_async([str(getattr(wtask, "task_uid", "") or "")], source="api.tasks.run.stream")
                 q.put(
                     (
                         "done",

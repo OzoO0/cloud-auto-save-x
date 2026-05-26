@@ -41,6 +41,46 @@ SUPPORTED_CLOUD_TYPES = {
 }
 
 
+def _normalize_drive_type(value: str | None) -> str | None:
+    v = str(value or "").strip()
+    if not v:
+        return None
+    k = v.lower()
+    mapping = {
+        "pan115": "115",
+        "cloud115": "115",
+        "115": "115",
+        "pan123": "123pan",
+        "123pan": "123pan",
+        "tianyi": "cloud189",
+        "cloud189": "cloud189",
+        "baidupan": "baidu",
+        "baidu": "baidu",
+        "quark": "quark",
+        "uc": "uc",
+        "aliyun": "aliyun",
+        "xunlei": "xunlei",
+    }
+    return mapping.get(k) or k
+
+
+def _pansou_cloud_type(value: str | None) -> str | None:
+    dt = _normalize_drive_type(value)
+    if not dt:
+        return None
+    mapping = {
+        "115": "pan115",
+        "123pan": "pan123",
+        "cloud189": "tianyi",
+        "baidu": "baiduPan",
+        "quark": "quark",
+        "uc": "uc",
+        "aliyun": "aliyun",
+        "xunlei": "xunlei",
+    }
+    return mapping.get(dt)
+
+
 def _debug_enabled() -> bool:
     return os.getenv("DEBUG", "0").strip().lower() in {"1", "true", "yes", "y", "on"}
 
@@ -334,12 +374,15 @@ class PanSouClient:
         self.server = server.rstrip("/")
         self.session = requests.Session()
 
-    def search(self, keyword: str, refresh: bool = False) -> list[dict[str, Any]]:
+    def search(self, keyword: str, refresh: bool = False, *, drive_type: str | None = None) -> list[dict[str, Any]]:
         try:
             url = f"{self.server}/api/search"
+            cloud_type = _pansou_cloud_type(drive_type)
             params = {
                 "kw": keyword,
-                "cloud_types": ["quark", "pan123", "pan115", "uc", "tianyi", "aliyun", "xunlei", "baiduPan"],
+                "cloud_types": [cloud_type]
+                if cloud_type
+                else ["quark", "pan123", "pan115", "uc", "tianyi", "aliyun", "xunlei", "baiduPan"],
                 "res": "merge",
                 "refresh": bool(refresh),
             }
@@ -347,7 +390,24 @@ class PanSouClient:
             data = res.json()
             if data.get("code") != 0:
                 return []
-            items = (((data.get("data") or {}).get("merged_by_type") or {}).get("quark")) or []
+            merged = (data.get("data") or {}).get("merged_by_type") or {}
+            items: Any = []
+            if cloud_type:
+                keys: list[str] = [cloud_type, cloud_type.lower()]
+                if cloud_type == "tianyi":
+                    keys.extend(["cloud189", "tianyi"])
+                elif cloud_type == "pan115":
+                    keys.extend(["cloud115", "pan115", "115"])
+                elif cloud_type == "pan123":
+                    keys.extend(["123pan", "pan123"])
+                elif cloud_type == "baiduPan":
+                    keys.extend(["baidupan", "baidu"])
+                for k in keys:
+                    if isinstance(merged, dict) and isinstance(merged.get(k), list):
+                        items = merged.get(k) or []
+                        break
+            if not items:
+                items = (merged.get("quark") if isinstance(merged, dict) else None) or []
             return self.format_search_results(items)
         except Exception:
             return []
@@ -393,12 +453,14 @@ def fetch_task_suggestions(
     deep: int,
     *,
     filter_invalid: bool = True,
+    drive_type: str | None = None,
 ) -> tuple[list[dict[str, Any]], bool, str | None]:
     keyword = str(keyword or "").strip()
     if len(keyword) < 2:
         return ([], False, None)
-    deep = 0 if str(deep) == "1" else 0
-    _log_debug("[suggestions] request", {"keyword": keyword, "deep": deep})
+    deep = 1 if str(deep) == "1" else 0
+    dt_filter = _normalize_drive_type(drive_type)
+    _log_debug("[suggestions] request", {"keyword": keyword, "deep": deep, "drive_type": dt_filter})
 
     rows = ensure_default_sources(db)
     cfg_net = _loads(rows["net"].config_json or "")
@@ -421,9 +483,10 @@ def fetch_task_suggestions(
             url = f"{base_url}/task_suggestions"
             r = requests.get(url, params={"q": keyword.lower(), "d": str(deep)}, timeout=EXTERNAL_TIMEOUT)
             data = r.json()
-            print(data)
+
             if isinstance(data, dict):
-                return data if isinstance(data, list) else []
+                items = data.get("data") if isinstance(data.get("data"), list) else []
+                return items
             return data if isinstance(data, list) else []
         except Exception:
             return []
@@ -459,7 +522,7 @@ def fetch_task_suggestions(
             if not server:
                 return []
             ps = PanSouClient(server)
-            return ps.search(keyword.lower(), refresh=deep == 1)
+            return ps.search(keyword.lower(), refresh=deep == 1, drive_type=dt_filter)
         except Exception:
             return []
 
@@ -512,22 +575,39 @@ def fetch_task_suggestions(
         .scalars()
         .all()
     )
+    enabled_drive_types = {_normalize_drive_type(x) for x in enabled_drive_types}
     enabled_drive_types = {x for x in enabled_drive_types if x}
     if not enabled_drive_types:
         return ([], token_updated, "没有可用的网盘账号（enabled=true 且 runtime_status=active），已隐藏不支持的资源")
+    if dt_filter and dt_filter not in enabled_drive_types:
+        return ([], token_updated, f"指定网盘类型没有可用账号：{dt_filter}")
 
     filtered: list[dict[str, Any]] = []
+    removed_by_accounts = 0
+    removed_by_drive_type = 0
     for item in results:
         url = str(item.get("shareurl") or "").strip()
         if not url:
             continue
         dt = AdapterRegistry.detect_drive_type(url)
-        if dt and str(dt) in enabled_drive_types:
-            filtered.append(item)
+        if not dt or str(dt) not in enabled_drive_types:
+            removed_by_accounts += 1
+            continue
+        if dt_filter and str(dt) != dt_filter:
+            removed_by_drive_type += 1
+            continue
+        name = item.get("taskname") if item.get("taskname") else item.get("content", "")
+        item['taskname'] = name
+        filtered.append(item)
 
     message = None
-    if len(filtered) != len(results):
-        message = f"已按可用网盘账号过滤：{', '.join(sorted(enabled_drive_types))}"
+    msg_parts: list[str] = []
+    if dt_filter:
+        msg_parts.append(f"已限定网盘类型：{dt_filter}")
+    elif removed_by_accounts:
+        msg_parts.append(f"已按可用网盘账号过滤：{', '.join(sorted(enabled_drive_types))}")
+    if msg_parts:
+        message = "; ".join(msg_parts)
 
     if filter_invalid:
         invalid = list_invalid_shareurls(db, shareurls=[str(x.get("shareurl") or "").strip() for x in filtered])

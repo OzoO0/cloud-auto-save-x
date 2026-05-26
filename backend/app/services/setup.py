@@ -30,9 +30,7 @@ def seed_permissions(db: Session) -> dict[str, Permission]:
     return perms_by_code
 
 
-def create_initial_admin(db: Session, *, username: str, email: str, password: str) -> User:
-    ensure_password_policy(password)
-
+def ensure_permissions_and_roles(db: Session) -> None:
     perms_by_code = seed_permissions(db)
 
     admin_role = db.execute(select(Role).where(Role.name == "admin")).scalars().first()
@@ -40,6 +38,13 @@ def create_initial_admin(db: Session, *, username: str, email: str, password: st
         admin_role = Role(name="admin", description="系统管理员")
         db.add(admin_role)
     admin_role.permissions = list(perms_by_code.values())
+
+
+def create_initial_admin(db: Session, *, username: str, email: str, password: str) -> User:
+    ensure_password_policy(password)
+
+    ensure_permissions_and_roles(db)
+    admin_role = db.execute(select(Role).where(Role.name == "admin")).scalars().first()
 
     user = User(
         username=username,

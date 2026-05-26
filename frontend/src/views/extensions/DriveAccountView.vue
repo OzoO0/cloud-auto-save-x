@@ -23,6 +23,7 @@ import { DRIVE_ACCOUNT_WRITE } from '@/constants/permissions'
 import { useAuthStore } from '@/stores/auth'
 import { useIsMobile } from '@/composables/useIsMobile'
 import type { ConfigFieldItem, DriveAccountItem, DriveTypeItem } from '@/types/extensions'
+import { validateCrontab5, validateTimezone } from '@/utils/cron'
 
 const auth = useAuthStore()
 const canWrite = computed(() => auth.permissions.includes(DRIVE_ACCOUNT_WRITE))
@@ -168,6 +169,18 @@ async function loadProbeScheduler() {
 
 async function saveProbeScheduler() {
   if (!canWrite.value) return
+  const cronCheck = validateCrontab5(String(probeScheduler.data.crontab || ''))
+  if (!cronCheck.ok) {
+    ElMessage.error(cronCheck.message)
+    return
+  }
+  const tzCheck = validateTimezone(String(probeScheduler.data.timezone || ''))
+  if (!tzCheck.ok) {
+    ElMessage.error(tzCheck.message)
+    return
+  }
+  probeScheduler.data.crontab = cronCheck.normalized || probeScheduler.data.crontab
+  probeScheduler.data.timezone = tzCheck.normalized || probeScheduler.data.timezone
   probeScheduler.saving = true
   try {
     probeScheduler.data = await patchDriveAccountProbeScheduler({

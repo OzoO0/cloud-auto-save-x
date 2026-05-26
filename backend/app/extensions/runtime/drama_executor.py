@@ -571,19 +571,19 @@ class DramaTaskExecutor:
                 raise SkipTask("不在允许运行的星期范围内")
         else:
             if not runweek:
-                self._line("跳过: 未配置运行星期")
-                raise SkipTask("未配置运行星期")
-            try:
-                week = set(int(x) for x in runweek)
-            except Exception:
-                week = set()
-            week = {int(x) for x in week if 1 <= int(x) <= 7}
-            if not week:
-                self._line("跳过: 未配置运行星期")
-                raise SkipTask("未配置运行星期")
-            if now.isoweekday() not in week:
-                self._line(f"跳过: 星期 {now.isoweekday()} 不在 {sorted(list(week))}")
-                raise SkipTask("不在允许运行的星期范围内")
+                self._line("未配置运行星期: 默认允许运行")
+            else:
+                try:
+                    week = set(int(x) for x in runweek)
+                except Exception:
+                    week = set()
+                week = {int(x) for x in week if 1 <= int(x) <= 7}
+                if not week:
+                    self._line("跳过: 未配置运行星期")
+                    raise SkipTask("未配置运行星期")
+                if now.isoweekday() not in week:
+                    self._line(f"跳过: 星期 {now.isoweekday()} 不在 {sorted(list(week))}")
+                    raise SkipTask("不在允许运行的星期范围内")
 
         self._set_stage("share_parse")
         self._section("解析分享链接")

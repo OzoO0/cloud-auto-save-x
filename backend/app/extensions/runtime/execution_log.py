@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Callable
+from typing import Any, Callable
 from zoneinfo import ZoneInfo
 
 
@@ -13,6 +13,7 @@ class ExecutionLog:
     started_at: datetime = field(default_factory=lambda: datetime.now())
     emit_line: Callable[[str], None] | None = field(default=None, repr=False)
     emit_stage: Callable[[str], None] | None = field(default=None, repr=False)
+    emit_progress: Callable[[dict[str, Any]], None] | None = field(default=None, repr=False)
 
     def set_stage(self, stage: str | None) -> None:
         self.stage = stage
@@ -31,6 +32,10 @@ class ExecutionLog:
         self.lines.append(line)
         if self.emit_line:
             self.emit_line(line)
+
+    def progress(self, payload: dict[str, Any]) -> None:
+        if self.emit_progress:
+            self.emit_progress(dict(payload or {}))
 
     def render(self) -> str:
         return "\n".join(self.lines).rstrip() + "\n"

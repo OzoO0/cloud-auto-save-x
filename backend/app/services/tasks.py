@@ -3,17 +3,72 @@ from __future__ import annotations
 import json
 import uuid
 
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session, selectinload
 
 from app.core.errors import bad_request, not_found
 from app.extensions.runtime.adapter_registry import AdapterRegistry
 from app.extensions.runtime.task_executor import TaskExecutor
+from app.models.sync_task_drama_link import SyncTaskDramaLink
 from app.models.task import Task
+from app.models.task_execution import TaskExecution
 
 
 def list_tasks(db: Session) -> list[Task]:
     return db.execute(select(Task).options(selectinload(Task.executions)).order_by(Task.id.desc())).scalars().all()
+
+
+def list_tasks_recent_executions(db: Session, *, limit: int = 3) -> list[Task]:
+    tasks = db.execute(select(Task).order_by(Task.id.desc())).scalars().all()
+    if not tasks:
+        return []
+
+    task_ids = [int(getattr(t, "id", 0) or 0) for t in tasks]
+    task_ids = [tid for tid in task_ids if tid > 0]
+    if not task_ids or limit <= 0:
+        for t in tasks:
+            t.executions = []
+        return tasks
+
+    rn = (
+        select(
+            TaskExecution.id.label("id"),
+            TaskExecution.task_id.label("task_id"),
+            func.row_number()
+            .over(partition_by=TaskExecution.task_id, order_by=TaskExecution.started_at.desc())
+            .label("rn"),
+        )
+        .where(TaskExecution.task_id.in_(task_ids))
+        .subquery()
+    )
+    recent_ids = (
+        db.execute(select(rn.c.id).where(rn.c.rn <= limit))
+        .scalars()
+        .all()
+    )
+
+    exec_map: dict[int, list[TaskExecution]] = {tid: [] for tid in task_ids}
+    if recent_ids:
+        executions = (
+            db.execute(
+                select(TaskExecution)
+                .where(TaskExecution.id.in_(recent_ids))
+                .order_by(TaskExecution.task_id.asc(), TaskExecution.started_at.desc())
+            )
+            .scalars()
+            .all()
+        )
+        for ex in executions:
+            tid = int(getattr(ex, "task_id", 0) or 0)
+            if tid in exec_map:
+                exec_map[tid].append(ex)
+
+    for t in tasks:
+        tid = int(getattr(t, "id", 0) or 0)
+        t.executions = exec_map.get(tid, [])
+
+    return tasks
+
 
 
 def get_task(db: Session, task_id: int) -> Task:
@@ -134,6 +189,7 @@ def set_task_enabled(db: Session, task_id: int, enabled: bool) -> Task:
 
 def delete_task(db: Session, task_id: int) -> None:
     task = get_task(db, task_id)
+    db.query(SyncTaskDramaLink).filter(SyncTaskDramaLink.task_uid == str(task.task_uid)).delete(synchronize_session=False)
     db.delete(task)
     db.flush()
 

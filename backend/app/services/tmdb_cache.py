@@ -572,7 +572,7 @@ def refresh_linked_tasks(
 
     refreshed = 0
     for t, tid in targets[: max(0, int(max_items))]:
-        row, _, _ = refresh_tmdb_detail_sync(
+        row, _, _, _ = refresh_tmdb_detail_sync(
             db,
             media_type=t,  # type: ignore[arg-type]
             tmdb_id=tid,
@@ -613,7 +613,7 @@ def refresh_expired_cache(
 
     refreshed = 0
     for row in rows:
-        r, _, _ = refresh_tmdb_detail_sync(
+        r, _, _, _ = refresh_tmdb_detail_sync(
             db,
             media_type=row.media_type,  # type: ignore[arg-type]
             tmdb_id=int(row.tmdb_id),

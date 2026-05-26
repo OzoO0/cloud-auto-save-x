@@ -17,7 +17,9 @@ tests/*
 old_project
 backend/tests
 backend/data/*.db.*
-backend/data/*.db
+backend/data/*.db*
 backend/data/cache
 docs
 /docker-data
+backend/data/sync/*
+.dbg

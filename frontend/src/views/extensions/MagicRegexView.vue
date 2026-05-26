@@ -2,11 +2,13 @@
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 import { deleteMagicRegexRule, fetchMagicRegexRules, upsertMagicRegexRule } from '@/api/magicRegex'
+import { fetchOpenListConfig, patchOpenListConfig } from '@/api/openlist'
 import { fetchResourceSearchSources, patchResourceSearchSource } from '@/api/resourceSearch'
 import { fetchTMDBConfig, patchTMDBConfig } from '@/api/tmdb'
 import { TASK_WRITE } from '@/constants/permissions'
 import { useAuthStore } from '@/stores/auth'
 import type { MagicRegexRuleSetting } from '@/types/magicRegex'
+import type { OpenListConfig } from '@/types/openlist'
 import type { ResourceSearchSourceItem } from '@/types/resourceSearch'
 import type { TMDBConfig } from '@/types/tmdb'
 
@@ -44,6 +46,14 @@ const tmdb = reactive({
   enableGuessitFallbackRename: true,
   tvRenameTemplate: '{title}.S{season}E{episode}{ext}',
   movieRenameTemplate: '{title_dot}.{year}{ext}',
+})
+
+const openlist = reactive({
+  loading: false,
+  saving: false,
+  url: '',
+  hasToken: false,
+  tokenInput: '',
 })
 
 const builtinKeySet = computed(() => new Set(rules.value.filter((r) => r.built_in).map((r) => r.key)))
@@ -131,6 +141,39 @@ async function refreshTMDB() {
     applyTMDBConfig(data)
   } finally {
     tmdb.loading = false
+  }
+}
+
+function applyOpenListConfig(data: OpenListConfig) {
+  openlist.url = String(data.url || '')
+  openlist.hasToken = Boolean(data.has_token)
+}
+
+async function refreshOpenList() {
+  openlist.loading = true
+  try {
+    const data = await fetchOpenListConfig()
+    applyOpenListConfig(data)
+  } finally {
+    openlist.loading = false
+  }
+}
+
+async function saveOpenList() {
+  if (!canWrite.value) return
+  openlist.saving = true
+  try {
+    const payload: any = {
+      url: openlist.url ? String(openlist.url).trim() : null,
+    }
+    const token = String(openlist.tokenInput || '').trim()
+    if (token) payload.token = token
+    const data = await patchOpenListConfig(payload)
+    openlist.tokenInput = ''
+    applyOpenListConfig(data)
+    ElMessage.success('已保存')
+  } finally {
+    openlist.saving = false
   }
 }
 
@@ -284,6 +327,7 @@ onMounted(() => {
   refresh()
   refreshSources()
   refreshTMDB()
+  refreshOpenList()
 })
 </script>
 
@@ -520,6 +564,39 @@ onMounted(() => {
                 <div>- {tags_space}：清洗后的资源标签（空格分隔，可能为空）</div>
                 <div>示例：{title_dot}.{year}{ext} → The.World.of.Love.2025.mkv</div>
               </div>
+            </el-form-item>
+          </el-form>
+        </el-card>
+      </el-tab-pane>
+
+      <el-tab-pane label="OpenList" name="openlist">
+        <div class="page__hint">
+          <div>用于同步任务等功能的 OpenList 连接配置。</div>
+          <div>Token 不回显；留空保存表示不修改。</div>
+        </div>
+
+        <el-card class="page__card" shadow="never">
+          <template #header>
+            <div class="card__header">
+              <div>OpenList 配置</div>
+              <div>
+                <el-button text :loading="openlist.loading" @click="refreshOpenList">刷新</el-button>
+                <el-button type="primary" :loading="openlist.saving" :disabled="!canWrite" @click="saveOpenList">保存</el-button>
+              </div>
+            </div>
+          </template>
+
+          <el-form label-position="top" :disabled="openlist.loading">
+            <el-form-item label="地址（url）">
+              <el-input v-model="openlist.url" placeholder="例如：http://172.17.0.1:5244" />
+            </el-form-item>
+            <el-form-item label="Token（留空不修改）">
+              <el-input
+                v-model="openlist.tokenInput"
+                type="password"
+                show-password
+                :placeholder="openlist.hasToken ? '已配置（留空不修改）' : '请输入 OpenList Token'"
+              />
             </el-form-item>
           </el-form>
         </el-card>

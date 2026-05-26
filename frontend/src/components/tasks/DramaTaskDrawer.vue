@@ -583,7 +583,19 @@ async function searchSuggestions(deep: 0 | 1) {
   taskSuggestions.runId += 1
   const runId = taskSuggestions.runId
   try {
-    const data = await fetchTaskSuggestions(q, deep)
+    let driveType: string | null = null
+    if (deep === 1) {
+      if (state.account_choice !== '__AUTO__') {
+        driveType = driveTypeForAccountName(state.account_choice)
+      } else {
+        const url = String(state.shareurl || '').trim()
+        if (url) {
+          const dt = detectDriveTypeByUrl(url)
+          driveType = dt ? String(dt) : null
+        }
+      }
+    }
+    const data = await fetchTaskSuggestions(q, deep, driveType)
     if (runId !== taskSuggestions.runId) return
     const items = (data.data || []).filter((x) => x && x.shareurl)
     taskSuggestions.notice = String((data as any)?.message || '').trim()

@@ -17,6 +17,7 @@ import { TASK_WRITE } from '@/constants/permissions'
 import { useAuthStore } from '@/stores/auth'
 import { useIsMobile } from '@/composables/useIsMobile'
 import type { TMDBCacheItem, TMDBCacheListItem, TMDBCacheSchedulerSetting, TMDBCacheStatus } from '@/types/tmdbCache'
+import { validateCrontab5, validateTimezone } from '@/utils/cron'
 
 const auth = useAuthStore()
 const canWrite = computed(() => auth.permissions.includes(TASK_WRITE))
@@ -144,6 +145,18 @@ async function loadScheduler() {
 
 async function saveScheduler() {
   if (!canWrite.value) return
+  const cronCheck = validateCrontab5(String(scheduler.data.crontab || ''))
+  if (!cronCheck.ok) {
+    ElMessage.error(cronCheck.message)
+    return
+  }
+  const tzCheck = validateTimezone(String(scheduler.data.timezone || ''))
+  if (!tzCheck.ok) {
+    ElMessage.error(tzCheck.message)
+    return
+  }
+  scheduler.data.crontab = cronCheck.normalized || scheduler.data.crontab
+  scheduler.data.timezone = tzCheck.normalized || scheduler.data.timezone
   scheduler.saving = true
   try {
     scheduler.data = await patchTMDBCacheScheduler({

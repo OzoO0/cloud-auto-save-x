@@ -11,7 +11,10 @@ export async function patchResourceSearchSource(key: ResourceSearchSourceKey, pa
   return data
 }
 
-export async function fetchTaskSuggestions(q: string, d: number) {
-  const { data } = await http.get<TaskSuggestionResponse>('/tasks/suggestions', { params: { q, d }, timeout: 60000 })
+export async function fetchTaskSuggestions(q: string, d: number, drive_type?: string | null) {
+  const params: any = { q, d }
+  const dt = String(drive_type || '').trim()
+  if (dt) params.drive_type = dt
+  const { data } = await http.get<TaskSuggestionResponse>('/tasks/suggestions', { params, timeout: 60000 })
   return data
 }
