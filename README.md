@@ -17,6 +17,10 @@
 > \[!CAUTION]
 > ⛔️⛔️⛔️ 注意！资源不会每时每刻更新，**严禁设定过高的定时运行频率！** 以免账号风控和给网盘服务器造成不必要的压力。雪山崩塌，每一片雪花都有责任！
 
+<p align="center">
+  <strong><span style="font-size: 1.25em;">Telegram 交流群：<a href="https://telegram.me/Oz0Casx">https://telegram.me/Oz0Casx</a></span></strong>
+</p>
+
 ## ✨ 核心定位：找资源 → 追剧转存 → 智能整理 → 同步分发 → 302 播放
 
 你可以把它理解成一个"网盘追剧自动化流水线"：
