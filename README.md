@@ -2,126 +2,37 @@
 
 ![cloud-logo](img/icon.png)
 
-# 网盘自动转存
+# 网盘自动转存 Cloud Auto Save X（CASX）
 
-网盘签到、自动转存、命名整理、发推送提醒、刷新媒体库一条龙，内置自动修复异常任务能力。
+一条龙网盘媒体自动化平台：从找资源、追剧自动转存、智能重命名整理、数据同步分发、生成 CAS/STRM，到多网盘 302 直连反代播放，全流程打通；内置每日签到、异常任务自动修复与多渠道通知推送。
 
-[![zread](https://img.shields.io/badge/Ask_AI-_.svg?style=flat&color=00b0aa&labelColor=000000&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTQuOTYxNTYgMS42MDAxSDIuMjQxNTZDMS44ODgxIDEuNjAwMSAxLjYwMTU2IDEuODg2NjQgMS42MDE1NiAyLjI0MDFWNC45NjAxQzEuNjAxNTYgNS4zMTM1NiAxLjg4ODEgNS42MDAxIDIuMjQxNTYgNS42MDAxSDQuOTYxNTZDNS4zMTUwMiA1LjYwMDEgNS42MDE1NiA1LjMxMzU2IDUuNjAxNTYgNC45NjAxVjIuMjQwMUM1LjYwMTU2IDEuODg2NjQgNS4zMTUwMiAxLjYwMDEgNC45NjE1NiAxLjYwMDFaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00Ljk2MTU2IDEwLjM5OTlIMi4yNDE1NkMxLjg4ODEgMTAuMzk5OSAxLjYwMTU2IDEwLjY4NjQgMS42MDE1NiAxMS4wMzk5VjEzLjc1OTlDMS42MDE1NiAxNC4xMTM0IDEuODg4MSAxNC4zOTk5IDIuMjQxNTYgMTQuMzk5OUg0Ljk2MTU2QzUuMzE1MDIgMTQuMzk5OSA1LjYwMTU2IDE0LjExMzQgNS42MDE1NiAxMy43NTk5VjExLjAzOTlDNS42MDE1NiAxMC42ODY0IDUuMzE1MDIgMTAuMzk5OSA0Ljk2MTU2IDEwLjM5OTlaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik0xMy43NTg0IDEuNjAwMUgxMS4wMzg0QzEwLjY4NSAxLjYwMDEgMTAuMzk4NCAxLjg4NjY0IDEwLjM5ODQgMi4yNDAxVjQuOTYwMUMxMC4zOTg0IDUuMzEzNTYgMTAuNjg1IDUuNjAwMSAxMS4wMzg0IDUuNjAwMUgxMy43NTg0QzE0LjExMTkgNS42MDAxIDE0LjM5ODQgNS4zMTM1NiAxNC4zOTg0IDQuOTYwMVYyLjI0MDFDMTQuMzk4NCAxLjg4NjY0IDE0LjExMTkgMS42MDAxIDEzLjc1ODQgMS42MDAxWiIgZmlsbD0iI2ZmZiIvPgo8cGF0aCBkPSJNNCAxMkwxMiA0TDQgMTJaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00IDEyTDEyIDQiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K&logoColor=ffffff)](https://zread.ai/OzoO0/cloud-auto-save-x)
+[![wiki](https://img.shields.io/badge/wiki-Documents-green?logo=github)](https://github.com/OzoO0/cloud-auto-save-x/wiki) [![github releases](https://img.shields.io/github/v/release/OzoO0/cloud-auto-save-x?logo=github)](https://github.com/OzoO0/cloud-auto-save-x) [![docker pulls](https://img.shields.io/docker/pulls/ozoo0/cloud-auto-save-x?logo=docker&\&logoColor=white)](https://hub.docker.com/r/ozoo0/cloud-auto-save-x) [![docker image size](https://img.shields.io/docker/image-size/ozoo0/cloud-auto-save-x?logo=docker&\&logoColor=white)](https://hub.docker.com/r/ozoo0/cloud-auto-save-x)
 
-[![wiki][wiki-image]][wiki-url] [![github releases][gitHub-releases-image]][github-url] [![docker pulls][docker-pulls-image]][docker-url] [![docker image size][docker-image-size-image]][docker-url]
-
-[wiki-image]: https://img.shields.io/badge/wiki-Documents-green?logo=github
-[gitHub-releases-image]: https://img.shields.io/github/v/release/OzoO0/cloud-auto-save-x?logo=github
-[docker-pulls-image]: https://img.shields.io/docker/pulls/ozoo0/cloud-auto-save-x?logo=docker&&logoColor=white
-[docker-image-size-image]: https://img.shields.io/docker/image-size/ozoo0/cloud-auto-save-x?logo=docker&&logoColor=white
-[github-url]: https://github.com/OzoO0/cloud-auto-save-x
-[docker-url]: https://hub.docker.com/r/ozoo0/cloud-auto-save-x
-[wiki-url]: https://github.com/Cp0204/quark-auto-save/wiki
-
-![run_log](img/run_log.png)
+本软件完全免费开源，如果这个项目对你有帮助，请点击右上角 ⭐ Star 支持一下！
 
 </div>
+
+***
 
 > \[!CAUTION]
 > ⛔️⛔️⛔️ 注意！资源不会每时每刻更新，**严禁设定过高的定时运行频率！** 以免账号风控和给网盘服务器造成不必要的压力。雪山崩塌，每一片雪花都有责任！
 
-> \[!NOTE]
-> 开发者≠客服，开源免费≠帮你解决使用问题；本项目 Wiki 已经相对完善，遇到问题请先翻阅 Issues 和 Wiki ，请勿盲目发问。
+## ✨ 核心定位：找资源 → 追剧转存 → 智能整理 → 同步分发 → 302 播放
 
-## 项目简介
+你可以把它理解成一个"网盘追剧自动化流水线"：
 
-网盘自动转存（Cloud Auto Save X 简称 CASX）是一个基于 FastAPI + Vue3 的 Web 应用，提供网盘自动转存功能，可以帮助你：
+1. **找资源**：通过影视发现（豆瓣榜单）、资源搜索（CloudSaver、PanSou）快速定位可用分享链接，一键创建追剧任务。
+2. **追剧转存**：按更新进度定时/自动运行，把分享链接中的新剧集自动转存到你的网盘目录，分享失效自动换链修复。
+3. **智能整理**：结合 TMDB 自动识别剧集并标准化重命名，支持正则规则、魔法匹配与文件过滤，转存即入库。
+4. **同步分发**：通过 OpenList、网盘直连、NAS 本地目录等多端点，把网盘内容同步到本地媒体库或其他网盘；支持网盘之间复制与秒传加速。
+5. **挂载 STRM / 生成 CAS**：按账号批量生成 CAS 数据与 302 直连 STRM，把网盘资源直接接入媒体库。
+6. **302 播放**：多网盘 302 智能反代（已支持飞牛影视、Emby），多账号自动负载、智能切换，让播放器直接走网盘直链。
 
-- 🔄 **自动转存**：定时或自动（根据节目状态和任务进度）运行，自动转存各种网盘分享链接中的文件
-- 🔄 **数据同步**：基于OpenList实现的多网盘数据同步和网盘与NAS本地的数据同步
-- 📝 **智能规则**：在为手动配置重命名规则并且配置TMDB配置时，支持自动识别-重命名
-- 🧩 **文件过滤**：通过过滤规则排除不需要的文件或文件夹，支持高级过滤功能
-- 📊 **任务管理**：支持多任务管理，支持全局统一设置及单任务独立设置，支持任务筛选和排序
-- 🔍 **资源搜索**：智能搜索网盘资源，自动识别链接可用性，自动定位到分享目录
-- 🎬 **影视发现**：浏览豆瓣热门影视榜单，一键快速创建任务，智能填充配置
-- 📅 **追剧日历**：追踪节目播出时间，了解转存进度，支持海报视图和日历视图
-- ✅ **自动签到**：每日自动签到领空间（支持：夸克网盘、天翼云盘、百度网盘）
-- 🔔 **通知推送**：支持多个通知推送渠道，及时了解转存状态
-- 🔌 **插件系统**：支持多种插件扩展功能，包括媒体库局部刷新、下载任务推送、strm 文件生成等
-- 🔄 **自动修复异常任务**：自动识别并修复异常任务，如分享链接失效、账号被限流等
+本文档面向 Docker 镜像使用者，重点介绍功能能力、部署方式和初始化配置流程。
 
+## 界面预览
 
-## 核心功能
-
-### 网盘支持情况
-
-| 网盘名称 | 支持情况 |
-| --- | --- |
-| 夸克网盘 | 支持 |
-| 天翼云盘 | 支持 |
-| 百度网盘 | 支持 |
-| 阿里云盘 | 支持 |
-| 115网盘 | 支持 |
-| 123网盘 | 支持 |
-| UC网盘 | 支持 |
-| 迅雷网盘 | 支持 |
-| 移动云盘 | 支持 |
-| 光鸭云盘 | 支持 |
-
-### 自动转存
-
-- 分享链接自动识别资源存放文件夹
-- 转存任务文件智能重命名（需配置TMDB API密钥）
-- 智能搜索资源并自动填充（集成 CloudSaver、PanSou，支持有效性检查、失效过滤）
-- 支持自动修复异常任务（如分享链接失效、账号被限流等）
-- 支持自动解压压缩包（仅限夸克高级会员）
-- 支持一次性转存任务
-
-
-## 部署
-
-### Docker 部署
-
-Docker 部署提供 WebUI 进行管理配置，部署命令：
-
-```shell
-docker run -d \
-  --name cloud-auto-save-x \
-  -p 5115:5115 \ # 映射端口，:前的可以改，即部署后访问的端口，:后的不可改
-  -v ./cloud-auto-save-x/data:/app/backend/data \ # 必须，配置持久化
-  -v ./cloud-auto-save-x/media:/media \ # 可选，模块alist_strm_gen生成strm使用
-  -v ./cloud-auto-save-x/nasfile:/app/backend/data/sync/nasfile \ # 可选，用于同步任务Local使用，可与网盘数据同步
-  --network bridge \
-  --restart unless-stopped \
-  ozoo0/cloud-auto-save-x:latest
-  # registry.cn-hangzhou.aliyuncs.com/ozoo0/cloud-auto-save-x:latest # 国内镜像地址
-```
-
-docker-compose.yml
-
-```yaml
-name: cloud-auto-save-x
-services:
-  cloud-auto-save-x:
-    image: ozoo0/cloud-auto-save-x:latest
-    container_name: cloud-auto-save-x
-    network_mode: bridge
-    ports:
-      - 5115:5115
-    restart: unless-stopped
-    volumes:
-      - ./cloud-auto-save-x/data:/app/backend/data
-      - ./cloud-auto-save-x/media:/media
-      - ./cloud-auto-save-x/nasfile:/app/backend/data/sync/nasfile
-```
-
-管理地址：<http://yourhost:5115>
-
-| 环境变量             | 默认         | 备注                           |
-| ---------------- | ---------- | ---------------------------- |
-| `PORT`           | `5115`     | 管理后台端口                       |
-| `DEBUG`          | `0`        | 开启调试模式，打印更多日志信息 |
-| `DRAMA_RUNTIME_RETRY_MAX_ATTEMPTS`        | `0`        | 最大重试次数，默认3次，0表示不重试 |
-| `DRAMA_RUNTIME_RETRY_BACKOFF_SECONDS`        | `1`        | 重试延迟时间，默认1秒 |
-| `DRAMA_RUNTIME_RETRY_MAX_BACKOFF_SECONDS`        | `8`        | 最大重试延迟时间，默认8秒 |
-| `DRAMA_RUNTIME_RETRY_JITTER_RATIO`        | `0.2`        | 重试延迟随机化比例，默认0.2 |
-
-
+![run\_log](img/run_log.png)
 
 <details open>
 <summary>WebUI 预览</summary>
@@ -138,48 +49,318 @@ services:
 
 </details>
 
-## 使用说明
+## 🚀 核心功能总览
 
-### 正则处理示例
+### 1. 🔄 追剧任务与自动转存是核心主线能力
 
-| pattern                        | replace                 | 效果                                                 |
-| ------------------------------ | ----------------------- | -------------------------------------------------- |
-| `.*`                           | <br />                  | 无脑转存所有文件，不整理                                       |
-| `\.mp4$`                       | <br />                  | 转存所有 `.mp4` 后缀的文件                                  |
-| `^【电影TT】花好月圆(\d+)\.(mp4\|mkv)` | `\1.\2`                 | 【电影TT】花好月圆01.mp4 → 01.mp4【电影TT】花好月圆02.mkv → 02.mkv |
-| `^(\d+)\.mp4`                  | `S02E\1.mp4`            | 01.mp4 → S02E01.mp402.mp4 → S02E02.mp4             |
-| `TV_REGEX`                          | <br />                  | [魔法匹配](#魔法匹配)剧集文件                                  |
-| `^(\d+)\.mp4`                  | `{TASKNAME}.S02E\1.mp4` | 01.mp4 → 任务名.S02E01.mp4                            |
+项目当前最值得强调的能力，不是"单点转存"，而是面向连载剧集的追剧自动化：
 
-**默认规则**：在已配置TMDB后，留空则增加兜底智能匹配。
+* **定时 + 自动双模式**：按周更日历定时运行，也可根据节目状态和任务进度自动触发，只转新增剧集，不重复转存。
 
-更多正则使用说明：[正则处理教程](https://github.com/ozoo0/cloud-auto-save-x/wiki/正则处理教程)
+* **分享目录自动定位**：分享链接自动识别资源存放文件夹，支持访问码链接，自动下钻到剧集目录。
 
-> \[!TIP]
->
-> **魔法匹配和魔法变量**：在正则处理中，我们定义了一些“魔法匹配”模式，如果 表达式 的值以 $ 开头且 替换式 留空，程序将自动使用预设的正则表达式进行匹配和替换。
->
-> 更多说明请看[魔法匹配和魔法变量](https://github.com/ozoo0/cloud-auto-save-x/wiki/魔法匹配和魔法变量)
+* **异常自动修复**：分享链接失效自动换链（同剧同集优先匹配、大小优选、防串剧），账号被限流/探测失败自动禁用并切换，任务无需人工值守。
 
+* **智能重命名**：配置 TMDB API 密钥后，自动识别剧集并按标准命名重命名，内置 Guessit + 正则兜底，处理各种奇怪分享命名。
 
-### 刷新媒体库
+* **文件过滤**：通过过滤规则排除广告、样片等不需要的文件或文件夹，支持高级过滤。
 
-在有新转存时，可触发完成相应功能，如自动刷新媒体库、生成 .strm 文件等。配置指南：[插件配置](https://github.com/ozoo0/cloud-auto-save-x/wiki/插件配置)
+* **一次性转存**：除追剧任务外，也支持一次性转存任务，适合电影、合集类资源。
 
-媒体库模块以插件的方式的集成，如果你有兴趣请参考[插件开发指南](https://github.com/ozoo0/cloud-auto-save-x/tree/main/plugins)。
+* **自动解压**：支持压缩包自动解压转存（仅限夸克高级会员）。
 
-### 更多使用技巧
+* **任务全生命周期管理**：任务筛选、排序、暂停、停止、继续、手动运行，实时日志与运行记录可回溯。
 
-请参考 Wiki ：[使用技巧集锦](https://github.com/ozoo0/cloud-auto-save-x/wiki/使用技巧集锦)
+一句话总结：把"追更"这件事完全交给程序，你只需要看片。
 
+### 2. 🎬 影视发现与追剧日历
+
+为了降低"建任务"的门槛，项目提供了完整的前置入口：
+
+* **影视发现**：浏览豆瓣热门影视榜单，智能识别 TMDB 信息，一键创建追剧任务并自动填充剧集名、年份、更新星期等配置。
+
+* **资源搜索**：集成 CloudSaver、PanSou 资源搜索，自动检查链接有效性、过滤失效链接，搜索命中后自动定位到分享目录。
+
+* **追剧日历**：追踪节目播出时间与转存进度，支持海报视图、日历视图和年度视图，一眼看清哪些剧在更、转到了哪一集。
+
+* **追剧总览**：Dashboard 大盘汇总全部任务运行状态、更新进度与异常提醒。
+
+### 3. 🗂️ 智能规则：正则处理与魔法匹配
+
+转存文件的命名整理支持从"无脑全转"到"精细整理"的完整梯度：
+
+| pattern                        | replace                 | 效果                        |
+| ------------------------------ | ----------------------- | ------------------------- |
+| `.*`                           | <br />                  | 无脑转存所有文件，不整理              |
+| `\.mp4$`                       | <br />                  | 转存所有 `.mp4` 后缀的文件         |
+| `^【电影TT】花好月圆(\d+)\.(mp4\|mkv)` | `\1.\2`                 | 【电影TT】花好月圆01.mp4 → 01.mp4 |
+| `^(\d+)\.mp4`                  | `S02E\1.mp4`            | 01.mp4 → S02E01.mp4       |
+| `TV_REGEX`                     | <br />                  | 魔法匹配剧集文件                  |
+| `^(\d+)\.mp4`                  | `{TASKNAME}.S02E\1.mp4` | 01.mp4 → 任务名.S02E01.mp4   |
+
+* **默认规则**：已配置 TMDB 后，规则留空即启用兜底智能识别匹配。
+
+* **魔法匹配和魔法变量**：表达式以 `$` 开头且替换式留空时，自动使用预设的正则表达式进行匹配和替换；`{TASKNAME}` 等变量可在替换式中引用。
+
+* 更多说明：[正则处理教程](https://github.com/OzoO0/cloud-auto-save-x/wiki/正则处理教程)、[魔法匹配和魔法变量](https://github.com/OzoO0/cloud-auto-save-x/wiki/魔法匹配和魔法变量)
+
+### 4. 🔁 数据同步：网盘 ⇄ 网盘 ⇄ NAS
+
+* **多种同步端点**：支持 OpenList、网盘直连、NAS 本地目录（Local）作为源端或目标端。
+
+* **多种同步方向**：网盘与网盘、网盘与 NAS、本地资料库之间的数据同步，适合把常用网盘内容落到本地媒体库，或在多个网盘之间建立副本。
+
+* **统一管理**：同步任务统一查看进度、执行状态、运行记录与异常信息，支持运行后插件联动。
+
+* **安全机制**：原子锁与临时文件覆盖方案，避免并发冲突与脏数据。
+
+### 5. 📦 网盘复制与秒传加速（dl302）
+
+项目内置自研 dl302 引擎，提供网盘之间的文件复制与分发能力：
+
+* **全方向复制**：支持本地 → 网盘、网盘 → 本地、网盘 → 网盘的文件复制。
+
+* **两种复制模式**：流式复制（速度优先，不占本地空间）与下载复制（空间优先），可按场景选择；支持并发 Range 分片下载，分片并发与分片大小均可配置。
+
+* **同盘秒传**：115、天翼云盘、移动云盘等账号之间支持更高效的同盘复制体验。
+
+* **秒传数据自动沉淀**：复制完成后自动准备可复用的秒传数据（含本地抽样哈希缓存），方便后续把同一文件快速分发到其他网盘；即使文件先落到本地或临时目录，也能继续为后续上传准备秒传数据。
+
+### 6. ⚡ CAS 数据与 STRM 生成
+
+* **CAS 数据任务**：按账号扫描视频文件，批量生成 CAS 数据，直接服务于 302 反代、预览和多网盘分发场景。
+
+* **任务可恢复**：支持创建、暂停、停止、继续和查看明细进度，任务状态持久化，服务重启或中断后可继续处理未完成任务。
+
+* **适用场景**：首次接入 302 反代时做一次性预热，也适合后续按需补全。
+
+* **STRM 生成**：支持生成 302 直连 STRM 文件对接媒体库，并提供 AList STRM 生成、SmartSTRM 等插件化方案。
+
+### 7. 🎞️ 多网盘 302 智能反代
+
+项目另一条主线能力，是把"网盘里的资源"变成"播放器可直接消费的直链"：
+
+* **飞牛影视 / Emby 反代**：内置飞牛影视与 Emby 反代适配（其它媒体系统会陆续适配）。
+
+* **智能切换**：当媒体库挂载本地资源时自动识别内外网，如果网盘中同样存有对应资源，自动切换到网盘资源进行 302 直连。
+
+* **智能负载(Pro)**：根据网盘负载情况智能切换到不同网盘的 302 直连（需要网盘中有资源），支持同类型多账号自动负载，减少单账号压力。
+
+* **免手动同步**：多网盘自动负载无需手动同步资源，配合 CAS 能力实现"主网盘有资源、子网盘少操作甚至免操作"的 302 直连反代。
+
+* **配合 STRM**：结合 302 直连 STRM 使用时，可进一步提升媒体库预览和播放体验。
+
+> ⚠️ 注：不建议将反代端口直接暴露给公网，可能存在安全风险，建议搭配 Web 反代服务使用。
+
+### 8. 🧩 插件系统与媒体库联动
+
+媒体库能力以插件方式集成，转存/同步完成后可自动触发后续动作：
+
+| 插件                                         | 能力                                  |
+| ------------------------------------------ | ----------------------------------- |
+| Emby / Plex / 飞牛（fnv）                      | 转存后自动刷新媒体库，支持局部刷新（fnv\_refresh\_v2） |
+| AList / OpenList                           | 挂载联动、目录同步                           |
+| alist\_strm / alist\_strm\_gen / smartstrm | 多种 STRM 文件生成方案                      |
+| aria2                                      | 下载任务推送                              |
+| auto\_unarchive                            | 压缩包自动解压（夸克高级会员）                     |
+
+### 9. 🔔 通知推送与日常运维
+
+* **20+ 通知渠道**：Bark、钉钉机器人、飞书机器人、Telegram Bot、企业微信（应用/机器人）、PushPlus、Server酱、PushDeer、PushMe、wxpusher、ntfy、Gotify、Qmsg、go-cqhttp、Synology Chat、DoDo、SMTP 邮件、自定义 Webhook 等，均支持在 Web 设置页配置与测试。
+
+* **Telegram 交互机器人**：不仅是推送，还可以作为交互机器人接收指令。
+
+* **自动签到**：每日自动签到领空间（支持夸克网盘、天翼云盘、百度网盘、移动云盘）。
+
+* **多用户与权限**：Web 登录认证、用户管理与细粒度权限控制（任务、同步、账号、用户分级授权）。
+
+* **初始化向导**：首次运行提供 Setup 向导，引导完成基础配置。
+
+## 网盘支持情况
+
+|  网盘名称 |  签到 |  转存 | 302直连 | CAS | STRM |
+| :---: | :-: | :-: | :---: | :-: | :--: |
+|  夸克网盘 |  ✅  |  ✅  |   ✅   |  ✅  |   ✅  |
+|  天翼云盘 |  ✅  |  ✅  |   ✅   |  ✅  |   ✅  |
+|  移动云盘 |  ✅  |  ✅  |   ✅   |  ✅  |   ✅  |
+| 115网盘 |  ❌  |  ✅  |   ✅   |  ✅  |   ✅  |
+|  UC网盘 |  ❌  |  ✅  |   ✅   |  ✅  |   ✅  |
+|  光鸭云盘 |  ❌  |  ✅  |   ✅   |  ❌  |   ✅  |
+|  百度网盘 |  ✅  |  ✅  |   ❌   |  ❌  |   ❌  |
+|  阿里云盘 |  ❌  |  ✅  |   ❌   |  ❌  |   ❌  |
+| 123网盘 |  ❌  |  ✅  |   ❌   |  ❌  |   ❌  |
+|  迅雷网盘 |  ❌  |  ✅  |   ✅   |  ✅  |   ✅  |
+
+## 🚢 快速部署
+
+### 1. 准备环境
+
+* Docker 20.10+，Docker Compose 2.x。
+
+* 一台可长期运行的 NAS / Linux 服务器（x86\_64 与 ARM64 均支持）。
+
+* 如需 TMDB 智能识别、豆瓣影视发现，请确保容器可访问 TMDB / 豆瓣（必要时配置代理）。
+
+### 2. Docker 一键部署
+
+```shell
+docker run -d \
+  --name cloud-auto-save-x \
+  -p 5115:5115 \
+  -p 5225:5225 \
+  -v ./cloud-auto-save-x/data:/app/backend/data \
+  -v ./cloud-auto-save-x/media:/media \
+  -v ./cloud-auto-save-x/strm:/strm \
+  -v ./cloud-auto-save-x/nasfile:/app/backend/data/sync/nasfile \
+  --network bridge \
+  --restart unless-stopped \
+  ozoo0/cloud-auto-save-x:latest
+  # 国内镜像：registry.cn-hangzhou.aliyuncs.com/ozoo0/cloud-auto-save-x:latest
+```
+
+### 3. docker-compose 部署（推荐）
+
+```yaml
+name: cloud-auto-save-x
+services:
+  cloud-auto-save-x:
+    image: ozoo0/cloud-auto-save-x:latest
+    container_name: cloud-auto-save-x
+    network_mode: bridge
+    ports:
+      - 5115:5115   # Web 管理台 + 302 端口（:前可改，:后不可改）
+      - 5225:5225   # 反代端口（:前可改，:后不可改）
+    restart: unless-stopped
+    volumes:
+      - ./cloud-auto-save-x/data:/app/backend/data        # 必须，配置与数据库持久化
+      - ./cloud-auto-save-x/media:/media                  # 可选，alist_strm_gen 插件生成 STRM 使用
+      - ./cloud-auto-save-x/strm:/strm                    # 可选，项目本身生成 STRM 使用
+      - ./cloud-auto-save-x/nasfile:/app/backend/data/sync/nasfile  # 可选，同步任务 Local 本地目录
+```
+
+启动：
+
+```shell
+docker compose pull   # 拉取最新镜像
+docker compose up -d  # 后台启动
+```
+
+访问 Web 管理台：<http://你的服务器IP:5115>，首次进入会引导完成初始化向导。
+
+### 4. 端口与挂载说明
+
+| 项                               | 默认值    | 说明                |
+| ------------------------------- | ------ | ----------------- |
+| 管理端口                            | `5115` | Web 管理台与 302 服务端口 |
+| 反代端口                            | `5225` | 媒体库反代服务端口         |
+| `data` 挂载                       | 必须     | 数据库、配置、缓存全部持久化在这里 |
+| `media` / `strm` / `nasfile` 挂载 | 可选     | 按实际使用的能力按需挂载      |
+
+### 5. 常用环境变量
+
+| 环境变量                                                                         | 默认                                                     | 备注                                 |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------ | ---------------------------------- |
+| `PORT`                                                                       | `5115`                                                 | 管理后台/302端口                         |
+| `REVERSE_PORT`                                                               | `5225`                                                 | 反代端口                               |
+| `DEBUG`                                                                      | `0`                                                    | 开启调试模式，打印更多日志信息                    |
+| `DB_DRIVER`                                                                  | `sqlite3`                                              | 数据库驱动，可选 `sqlite3` / `mysql`       |
+| `DATABASE_URL`                                                               | 空                                                      | 完整数据库连接串，配置后优先级最高                  |
+| `SQLITE_PATH`                                                                | `./data/app.db`                                        | SQLite 数据库文件路径                     |
+| `APP_DATA_DIR`                                                               | `./data`                                               | 项目运行数据目录，缓存等文件会落在这里                |
+| `DB_HOST` / `DB_PORT` / `DB_NAME` / `DB_USER` / `DB_PASSWORD` / `DB_CHARSET` | `127.0.0.1` / `3306` / `casx` / `root` / 空 / `utf8mb4` | MySQL 分项配置，仅 `DB_DRIVER=mysql` 时生效 |
+| `DRIVE_ACCOUNT_LSDIR_SCAN_RATE_LIMIT_PER_SECOND`                             | `1.0`                                                  | 网盘目录 lsdir 扫描速率限制（每秒请求数）           |
+| `DRAMA_SCHEDULE_RANDOM_DELAY_MAX_SECONDS`                                    | `300`                                                  | 追剧任务最大随机延迟时间（秒）                    |
+| `DRAMA_SCHEDULE_TASK_INTERVAL_MAX_SECONDS`                                   | `30`                                                   | 追剧任务最大间隔时间（秒）                      |
+| `DRAMA_RUNTIME_RETRY_MAX_ATTEMPTS`                                           | `0`                                                    | 任务运行最大重试次数，0 表示不重试                 |
+| `DRAMA_RUNTIME_RETRY_BACKOFF_SECONDS`                                        | `1`                                                    | 重试延迟时间（秒）                          |
+| `DRAMA_RUNTIME_RETRY_MAX_BACKOFF_SECONDS`                                    | `8`                                                    | 最大重试延迟时间（秒）                        |
+| `DRAMA_RUNTIME_RETRY_JITTER_RATIO`                                           | `0.2`                                                  | 重试延迟随机化比例                          |
+| `DL302_COPY_PART_CONCURRENCY`                                                | `4`                                                    | dl302 下载模式分片并发数                    |
+| `DL302_COPY_PART_SIZE_MB`                                                    | `10`                                                   | dl302 下载模式单分片大小（MB）                |
+
+### 6. 使用 MySQL（可选）
+
+项目默认使用 SQLite，开箱即用。如需切换到 MySQL：
+
+```env
+DB_DRIVER=mysql
+DATABASE_URL=mysql+pymysql://root:your_password@127.0.0.1:3306/casx?charset=utf8mb4
+APP_DATA_DIR=./data
+```
+
+或使用分项配置 `DB_HOST` / `DB_PORT` / `DB_NAME` / `DB_USER` / `DB_PASSWORD` / `DB_CHARSET`。
+
+说明：
+
+* `DATABASE_URL` 优先级最高，配置后会覆盖分项配置。
+
+* 首次切换前请先手动创建数据库：`CREATE DATABASE casx CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`
+
+* 配置完成后请先执行数据库迁移再启动服务（源码运行：`cd backend && alembic upgrade head`）。
+
+## Web 初始化建议
+
+首次进入 Web 管理台后，建议按下面顺序配置：
+
+1. 跟随**初始化向导**完成管理员账号与基础设置。
+2. 打开「网盘账号」，添加要使用的网盘账号（夸克、天翼、115、UC、移动等），账号探测失败的会被自动标记。
+3. 打开「设置」，配置 TMDB API 密钥（智能重命名必需）与通知推送渠道，并发送测试消息验证。
+4. 打开「影视发现」或直接创建「追剧任务」：填入分享链接，系统自动定位资源目录、填充剧集信息与更新星期，选择保存目录与重命名规则。
+5. 打开「追剧日历 / 追剧首页」确认任务运行与更新进度。
+6. 如需把网盘内容同步到 NAS 或其他网盘，打开「同步」创建同步任务，配置源端与目标端。
+7. 如需媒体库 302 播放，打开「302 代理」：配置账号 `302_path`，创建 CAS 数据任务预热，再创建飞牛 / Emby 反代实例。
+
+## 常用命令
+
+```shell
+docker compose ps        # 查看运行状态
+docker compose logs -f   # 查看日志
+docker compose pull && docker compose up -d   # 更新镜像
+docker compose down      # 停止服务
+```
+
+备份时建议至少保留：
+
+* `data/`：数据库、配置、任务状态、CAS 数据与缓存。
+
+* `strm/`：生成的 STRM 文件。
+
+## FAQ
+
+### 追剧任务没有运行 / 没有转存新剧集？
+
+优先检查：任务是否处于暂停状态、运行周期与运行星期配置、分享链接是否仍然有效（任务详情会给出失效原因）、账号是否被限流或探测失败。分享失效时项目会自动尝试换链修复，也可手动运行一次任务查看实时日志定位问题。
+
+### TMDB 智能重命名不生效？
+
+确认已在「设置」中配置 TMDB API 密钥，且容器可以访问 TMDB（必要时配置代理）。未配置 TMDB 时只能依赖正则规则与魔法匹配。
+
+### STRM 可以生成但媒体库无法播放？
+
+确认 STRM 中的 302 服务地址能被播放器/媒体服务器访问；确认对应网盘账号仍然有效；确认 CAS 数据已覆盖该资源；确认反代端口未被防火墙阻断。
+
+### 302 反代应该怎样暴露？
+
+不建议把反代端口直接暴露公网，建议通过 Web 反代服务（如 Nginx 反代加鉴权）对外提供访问。
+
+### 为什么强烈建议不要调高运行频率？
+
+网盘资源并非实时上传，过高频率只会增加账号风控风险并给网盘服务器造成压力。项目内置随机延迟与任务间隔机制，请保持默认或更宽松的节奏。
 
 ## 声明
 
 本项目基于个人兴趣开发并开源，仅供学习与交流使用，不包含任何破解行为，只是对网盘官方 API 的封装与调用，所有数据均来源于各大网盘官方，本人不对网盘内容及官方 API 变更所导致的任何后果负责。
 
+* 请确保你拥有对应账号、资源和媒体内容的合法使用权。
+
+* 请遵守所在地区法律法规、网盘服务条款和第三方服务规则。
+
+* 使用过程中产生的账号、数据、网络和版权风险由使用者自行承担。
+
 ## 致谢
 
 本项目参考 [Cp0204/quark-auto-save](https://github.com/Cp0204/quark-auto-save/releases/tag/v0.8.4) 思路进行整体重构，感谢 [Cp0204](https://github.com/Cp0204) 的开源贡献。
+
 
 ## ❤️ 支持项目
 
